@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Page extends Model
+class Slideshow extends Model
 {
     /**
      * The table associated with the model.
@@ -12,10 +12,10 @@ class Page extends Model
      * @var string
      */
 
-    protected $table = 'pages';
+    protected $table = 'slideshows';
 
     /**
-     * Get the user that owns the page.
+     * Get the user that owns the slideshow
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */

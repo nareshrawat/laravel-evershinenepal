@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePagesTable extends Migration
+class CreateBookingsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,16 +12,18 @@ class CreatePagesTable extends Migration
      */
     public function up()
     {
-        Schema::create('pages', function (Blueprint $table) {
+        Schema::create('bookings', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users')
+            $table->integer('kitchen_id')->unsigned();
+            $table->foreign('kitchen_id')->references('id')->on('kitchens')
                 ->onDelete('cascade');
-            $table->string('title');
-            $table->string('slug')->unique();
-            $table->longText('description');
-            $table->integer('parent')->default(0);
-            $table->integer('order')->default(0);
+            $table->string('name');
+            $table->string('email');
+            $table->string('phone');
+            $table->string('state');
+            $table->string('city');
+            $table->date('visit_start_date');
+            $table->date('visit_end_date');
             $table->boolean('active')->default(true);
             $table->timestamp('published_on');
             $table->timestamps();
@@ -36,6 +38,6 @@ class CreatePagesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('pages');
+        Schema::drop('bookings');
     }
 }

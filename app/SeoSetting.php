@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Page extends Model
+class SeoSetting extends Model
 {
     /**
      * The table associated with the model.
@@ -12,10 +12,19 @@ class Page extends Model
      * @var string
      */
 
-    protected $table = 'pages';
+    protected $table = 'seo_settings';
 
     /**
-     * Get the user that owns the page.
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'title', 'description', 'gAnalyticsCode'
+    ];
+
+    /**
+     * Get the user that owns the seo setting
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */

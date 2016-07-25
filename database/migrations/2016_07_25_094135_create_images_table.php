@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePagesTable extends Migration
+class CreateImagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,18 +12,13 @@ class CreatePagesTable extends Migration
      */
     public function up()
     {
-        Schema::create('pages', function (Blueprint $table) {
+        Schema::create('images', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')
                 ->onDelete('cascade');
-            $table->string('title');
-            $table->string('slug')->unique();
-            $table->longText('description');
-            $table->integer('parent')->default(0);
-            $table->integer('order')->default(0);
-            $table->boolean('active')->default(true);
-            $table->timestamp('published_on');
+            $table->string('image');
+            $table->string('caption');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -36,6 +31,6 @@ class CreatePagesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('pages');
+        Schema::drop('images');
     }
 }
