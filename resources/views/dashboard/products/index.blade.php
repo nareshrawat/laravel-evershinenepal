@@ -10,13 +10,13 @@
         <section class="content-header">
             <h1>
                 {{ $title }}
-                <a href="{{ route('dashboard.pages.create') }}">
-                    <button class="btn btn-primary btn-sm">Add Page</button>
+                <a href="{{ route('dashboard.products.create') }}">
+                    <button class="btn btn-primary btn-sm">Add Product</button>
                 </a>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                <li class="active">Pages</li>
+                <li class="active">Products</li>
             </ol>
         </section>
 
@@ -31,17 +31,17 @@
 
                                 <ul class="nav nav-tabs subsubsub">
                                     <li class="active">
-                                        <a href="{{ URL::to('/dashboard/pages') }}" class="btn btn-link">All
-                                            <span class="label label-primary">{{ $pagesNotDeletedCount }}</span>
+                                        <a href="{{ URL::to('/dashboard/products') }}" class="btn btn-link">All
+                                            <span class="label label-primary">{{ $productsNotDeletedCount }}</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{{ route('dashboard.pages.trash') }}" class="btn btn-link">Trash
-                                            <span class="label label-primary">{{ $pagesTrashedCount }}</span>
+                                        <a href="{{ route('dashboard.products.trash') }}" class="btn btn-link">Trash
+                                            <span class="label label-primary">{{ $productsTrashedCount }}</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{{ route('dashboard.pages.index') }}" class="btn btn-link"
+                                        <a href="{{ route('dashboard.products.index') }}" class="btn btn-link"
                                            target="_blank">Export To PDF
                                         </a>
                                     </li>
@@ -57,34 +57,47 @@
                                 <tr>
                                     <th>Title</th>
                                     <th>Description</th>
-                                    <th>Parent</th>
+                                    <th>Price</th>
+                                    <th>Categories</th>
                                     <th>Author</th>
                                     <th>Status</th>
                                     <th>Actions</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($pagesNotDeleted as $page)
+                                @foreach($productsNotDeleted as $product)
                                     <tr>
-                                        <td>{{ $page->title }}</td>
-                                        <td>{{ $page->description }}</td>
-                                        <td>{{ ($page->parent == 0) ? 'No Parent' : $page->title }}</td>
-                                        <td>{{ $page->user->name }}</td>
+                                        <td>{{ $product->title }}</td>
+                                        <td>{{ $product->description }}</td>
+                                        <td>{{ $product->sale_price .' '. $product->regular_price }}</td>
                                         <td>
-                                            {!! Form::open(array('method'=> 'PUT', 'route' => array('dashboard.pages.index', $page->id))) !!}
-                                            {{ Form::hidden('active', $page->active) }}
+                                        	@if(count($product->categories))
+                                        	  @foreach($product->categories as $cats)
+                                        	  
+                                        	  <p>{{ $cats->name }}</p>
+                                        	  
+                                        	  @endforeach
+
+                                        	  @else
+                                        	  <span>No Categories</span>
+                                        	  @endif
+                                        </td>
+                                        <td>{{ $product->user->name }}</td>
+                                        <td>
+                                            {!! Form::open(array('method'=> 'PUT', 'route' => array('dashboard.products.index', $product->id))) !!}
+                                            {{ Form::hidden('active', $product->active) }}
                                             <button type="submit"
-                                                    class="btn btn-xs {!! ($page->active == 1) ? 'btn-success' : 'btn-danger' !!}"
+                                                    class="btn btn-xs {!! ($product->active == 1) ? 'btn-success' : 'btn-danger' !!}"
                                                     data-toggle="tooltip" data-placement="top"
                                                     title=""
-                                                    data-original-title="{!! ($page->active == 1) ? 'Active' : 'In Active' !!}">
+                                                    data-original-title="{!! ($product->active == 1) ? 'Active' : 'In Active' !!}">
                                                 <i class="fa fa-lightbulb-o"></i>
                                             </button>
                                             {!! Form::close() !!}
 
                                         </td>
                                         <td class="actions">
-                                            {!! Form::open(array('method'=> 'GET', 'route' => array('dashboard.pages.edit', $page->id))) !!}
+                                            {!! Form::open(array('method'=> 'GET', 'route' => array('dashboard.products.edit', $product->id))) !!}
                                             <button type="submit" class="btn btn-xs btn-primary" data-toggle="tooltip"
                                                     data-placement="top"
                                                     title="" data-original-title="Edit">
@@ -92,9 +105,9 @@
                                             </button>
                                             {!! Form::close() !!}
 
-                                            {!! Form::open(array('method'=> 'DELETE', 'route' => array('dashboard.pages.destroy', $page->id))) !!}
+                                            {!! Form::open(array('method'=> 'DELETE', 'route' => array('dashboard.products.destroy', $product->id))) !!}
                                             <button type="submit" class="btn btn-xs btn-danger deleteModal"
-                                                    data-name="Page" data-toggle="tooltip" data-placement="top"
+                                                    data-name="Produt" data-toggle="tooltip" data-placement="top"
                                                     title="" data-original-title="Move To Trash">
                                                 <i class="fa fa-trash-o"></i>
                                             </button>
@@ -107,8 +120,10 @@
                                 <tfoot>
                                 <tr>
                                     <th>Title</th>
-                                    <th>Parent</th>
+                                    <th>Description</th>
+                                    <th>Price</th>
                                     <th>Author</th>
+                                    <th>Categories</th>
                                     <th>Status</th>
                                     <th>Actions</th>
                                 </tr>

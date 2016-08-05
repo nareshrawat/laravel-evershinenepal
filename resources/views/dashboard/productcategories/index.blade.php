@@ -10,13 +10,13 @@
         <section class="content-header">
             <h1>
                 {{ $title }}
-                <a href="{{ route('dashboard.pages.create') }}">
-                    <button class="btn btn-primary btn-sm">Add Page</button>
+                <a href="{{ route('dashboard.productcategories.create') }}">
+                    <button class="btn btn-primary btn-sm">Add New Category</button>
                 </a>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                <li class="active">Pages</li>
+                <li class="active">Product Categories</li>
             </ol>
         </section>
 
@@ -31,17 +31,17 @@
 
                                 <ul class="nav nav-tabs subsubsub">
                                     <li class="active">
-                                        <a href="{{ URL::to('/dashboard/pages') }}" class="btn btn-link">All
-                                            <span class="label label-primary">{{ $pagesNotDeletedCount }}</span>
+                                        <a href="{{ URL::to('/dashboard/productcategories') }}" class="btn btn-link">All
+                                            <span class="label label-primary">{{ $productcategoriesNotDeletedCount }}</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{{ route('dashboard.pages.trash') }}" class="btn btn-link">Trash
-                                            <span class="label label-primary">{{ $pagesTrashedCount }}</span>
+                                        <a href="{{ route('dashboard.productcategories.trash') }}" class="btn btn-link">Trash
+                                            <span class="label label-primary">{{ $productcategoriesTrashedCount }}</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{{ route('dashboard.pages.index') }}" class="btn btn-link"
+                                        <a href="{{ route('dashboard.productcategories.index') }}" class="btn btn-link"
                                            target="_blank">Export To PDF
                                         </a>
                                     </li>
@@ -57,6 +57,7 @@
                                 <tr>
                                     <th>Title</th>
                                     <th>Description</th>
+                                    <th>Thumbnail</th>
                                     <th>Parent</th>
                                     <th>Author</th>
                                     <th>Status</th>
@@ -64,27 +65,36 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($pagesNotDeleted as $page)
+                                @foreach($productcategoriesNotDeleted as $productcat)
                                     <tr>
-                                        <td>{{ $page->title }}</td>
-                                        <td>{{ $page->description }}</td>
-                                        <td>{{ ($page->parent == 0) ? 'No Parent' : $page->title }}</td>
-                                        <td>{{ $page->user->name }}</td>
+                                        <td>{{ $productcat->title }}</td>
+                                        <td>{{ $productcat->description }}</td>
                                         <td>
-                                            {!! Form::open(array('method'=> 'PUT', 'route' => array('dashboard.pages.index', $page->id))) !!}
-                                            {{ Form::hidden('active', $page->active) }}
+                                          @if(isset($productcat->image))
+                                          <img src="{{ URL::asset($productcat->image) }}" width="275" height="200" class="img-responsive">
+                                          
+                                          @else <span>No Image Set</span>
+                                          @endif
+                                        </td>
+                                        
+                                        <td>{{ ($productcat->parent == 0) ? 'No Parent' : $productcat->title }}</td>
+
+                                        <td>{{ $productcat->user->name }}</td>
+                                        <td>
+                                            {!! Form::open(array('method'=> 'PUT', 'route' => array('dashboard.productcategories.index', $productcat->id))) !!}
+                                            {{ Form::hidden('active', $productcat->active) }}
                                             <button type="submit"
-                                                    class="btn btn-xs {!! ($page->active == 1) ? 'btn-success' : 'btn-danger' !!}"
+                                                    class="btn btn-xs {!! ($productcat->active == 1) ? 'btn-success' : 'btn-danger' !!}"
                                                     data-toggle="tooltip" data-placement="top"
                                                     title=""
-                                                    data-original-title="{!! ($page->active == 1) ? 'Active' : 'In Active' !!}">
+                                                    data-original-title="{!! ($productcat->active == 1) ? 'Active' : 'In Active' !!}">
                                                 <i class="fa fa-lightbulb-o"></i>
                                             </button>
                                             {!! Form::close() !!}
 
                                         </td>
                                         <td class="actions">
-                                            {!! Form::open(array('method'=> 'GET', 'route' => array('dashboard.pages.edit', $page->id))) !!}
+                                            {!! Form::open(array('method'=> 'GET', 'route' => array('dashboard.productcategories.edit', $productcat->id))) !!}
                                             <button type="submit" class="btn btn-xs btn-primary" data-toggle="tooltip"
                                                     data-placement="top"
                                                     title="" data-original-title="Edit">
@@ -92,9 +102,9 @@
                                             </button>
                                             {!! Form::close() !!}
 
-                                            {!! Form::open(array('method'=> 'DELETE', 'route' => array('dashboard.pages.destroy', $page->id))) !!}
+                                            {!! Form::open(array('method'=> 'DELETE', 'route' => array('dashboard.productcategories.destroy', $productcat->id))) !!}
                                             <button type="submit" class="btn btn-xs btn-danger deleteModal"
-                                                    data-name="Page" data-toggle="tooltip" data-placement="top"
+                                                    data-name="Produt" data-toggle="tooltip" data-placement="top"
                                                     title="" data-original-title="Move To Trash">
                                                 <i class="fa fa-trash-o"></i>
                                             </button>
@@ -107,6 +117,8 @@
                                 <tfoot>
                                 <tr>
                                     <th>Title</th>
+                                    <th>Description</th>
+                                    <th>Thumbnail</th>
                                     <th>Parent</th>
                                     <th>Author</th>
                                     <th>Status</th>

@@ -25,6 +25,14 @@ class Image extends Model
     }
 
     /**
+     * The products that belong to the image.
+     */
+    public function products()
+    {
+        return $this->belongsToMany('App\Product')->withTimestamps();
+    }
+
+    /**
      * The kitchens that belong to the image.
      */
     public function kitchens()

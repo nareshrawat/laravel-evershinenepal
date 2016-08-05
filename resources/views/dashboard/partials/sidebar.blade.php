@@ -34,8 +34,8 @@
             </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li class="active"><a href="index.html"><i class="fa fa-circle-o"></i> Dashboard v1</a></li>
-                    <li><a href="index2.html"><i class="fa fa-circle-o"></i> Dashboard v2</a></li>
+                    <li class="active"><a href="{{ url('/') }}"><i class="fa fa-circle-o"></i> Home</a></li>
+                    
                 </ul>
             </li>
             <li class="treeview">
@@ -77,6 +77,35 @@
                     <li><a href="pages/charts/inline.html"><i class="fa fa-circle-o"></i> Inline charts</a></li>
                 </ul>
             </li>
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-folder-o"></i>
+                    <span>Pages</span>
+                    <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="{{ url('dashboard/pages') }}"><i class="fa fa-circle-o"></i> All Pages</a></li>
+                    <li><a href="{{ route('dashboard.pages.create') }}"><i class="fa fa-plus"></i> Add Page</a></li>
+                </ul>
+            </li>
+
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-bars"></i>
+                    <span>Products</span>
+                    <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="{{ url('dashboard/products') }}"><i class="fa fa-circle-o"></i> All Products</a></li>
+                    <li><a href="{{ url('dashboard/products/create') }}"><i class="fa fa-plus"></i> Add Product</a></li>
+                    <li><a href="{{ url('dashboard/productcategories') }}"><i class="fa fa-circle-o"></i> Categories </a></li>
+                </ul>
+            </li>
+
             <li class="treeview">
                 <a href="#">
                     <i class="fa fa-laptop"></i>
